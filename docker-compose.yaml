@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  servis_xml_pars:
+    build:
+      context: .
+      dockerfile: compose/Dockerfile
+    command: [ "python", "/xml_pars.py" ]
+    volumes:
+      - ./xml_pars.py:/xml_pars.py
+    depends_on:
+      - db
+
+  db:
+    container_name: postgres_with_data_for_test
+    image: postgres:14.0-alpine
+    hostname: db
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - ./compose/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5433"
+    command:
+      [ "postgres", "-c","port=5433" ]
+
+
+volumes:
+  postgres_data:
