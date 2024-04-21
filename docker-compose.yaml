@@ -14,7 +14,7 @@ services:
   db:
     container_name: postgres_with_data_for_test
     image: postgres:14.0-alpine
-    hostname: db
+    hostname: localhost
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
